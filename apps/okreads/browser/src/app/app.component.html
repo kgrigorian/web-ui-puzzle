@@ -4,11 +4,7 @@
       <div class="header--content">
         <h1>okreads</h1>
         <div>
-          <button
-            data-testing="toggle-reading-list"
-            mat-button
-            (click)="drawer.toggle()"
-          >
+          <button data-testing="toggle-reading-list" mat-button (click)="drawer.toggle()">
             Reading List
             <tmo-total-count></tmo-total-count>
           </button>
@@ -23,7 +19,7 @@
     <div class="reading-list-container" data-testing="reading-list-container">
       <h2>
         My Reading List
-        <button mat-icon-button (click)="drawer.close()">
+        <button mat-icon-button (click)="drawer.close()" aria-label="Close reading list">
           <mat-icon>close</mat-icon>
         </button>
       </h2>

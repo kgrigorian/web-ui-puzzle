@@ -7,7 +7,7 @@ import {
   ReadingListBook,
   searchBooks
 } from '@tmo/books/data-access';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Book } from '@tmo/shared/models';
 
 @Component({
@@ -18,7 +18,7 @@ import { Book } from '@tmo/shared/models';
 export class BookSearchComponent implements OnInit {
   books: ReadingListBook[];
 
-  searchForm = this.fb.group({
+  searchForm: FormGroup = this.fb.group({
     term: ''
   });
 
@@ -37,22 +37,22 @@ export class BookSearchComponent implements OnInit {
     });
   }
 
-  formatDate(date: void | string) {
+  formatDate(date: void | string): string | undefined {
     return date
       ? new Intl.DateTimeFormat('en-US').format(new Date(date))
       : undefined;
   }
 
-  addBookToReadingList(book: Book) {
+  addBookToReadingList(book: Book): void {
     this.store.dispatch(addToReadingList({ book }));
   }
 
-  searchExample() {
+  searchExample(): void {
     this.searchForm.controls.term.setValue('javascript');
     this.searchBooks();
   }
 
-  searchBooks() {
+  searchBooks(): void {
     if (this.searchForm.value.term) {
       this.store.dispatch(searchBooks({ term: this.searchTerm }));
     } else {
