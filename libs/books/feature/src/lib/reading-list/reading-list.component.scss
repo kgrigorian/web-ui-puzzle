@@ -33,11 +33,22 @@
   margin-right: $spacing-xxs;
 }
 
+.reading-list-item--buttons {
+  display: flex-end;
+  flex-direction: row !important;
+  margin-right: $spacing-xxs;
+}
+
 .reading-list-item--details--title,
 .reading-list-item--details--author {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+}
+
+.icon {
+  padding: $spacing-xxs;
+  margin-right: $spacing-xs;
 }
 
 .empty {
