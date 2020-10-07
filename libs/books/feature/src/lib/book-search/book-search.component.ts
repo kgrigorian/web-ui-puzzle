@@ -22,7 +22,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class BookSearchComponent implements OnInit, OnDestroy {
   books: ReadingListBook[];
-  subscription: Subscription = new Subscription()
+  subscription: Subscription;
 
   searchForm: FormGroup = this.fb.group({
     term: ''
@@ -39,6 +39,7 @@ export class BookSearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.subscription = new Subscription();
     this.store.select(getAllBooks).subscribe(books => {
       this.books = books;
     });
@@ -58,9 +59,7 @@ export class BookSearchComponent implements OnInit, OnDestroy {
     const snackBarRef = this.snackBar.open(`Book ${book.title} has been added to reading list`, 'Undo');
 
     this.subscription.add(snackBarRef.afterDismissed().subscribe((result)=>{
-      if (result.dismissedByAction) {
-        this.store.dispatch(failedAddToReadingList({ book }))
-      } else {
+      if (!result.dismissedByAction) {
         this.store.dispatch(addToReadingList({ book }))
       }
     }))
