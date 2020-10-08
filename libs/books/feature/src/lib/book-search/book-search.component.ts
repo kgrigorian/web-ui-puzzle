@@ -4,10 +4,9 @@ import { Subscription } from 'rxjs';
 import {
   addToReadingList,
   clearSearch,
-  failedAddToReadingList,
+  cancelAddToReadingList,
   getAllBooks,
   ReadingListBook,
-  removeFromReadingList,
   searchBooks
 } from '@tmo/books/data-access';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -55,13 +54,12 @@ export class BookSearchComponent implements OnInit, OnDestroy {
       : undefined;
   }
 
-  addBookToReadingList(book: Book): void {
+  addBookToReadingList(book: ReadingListBook): void {
+    this.store.dispatch(addToReadingList({ book }));
     const snackBarRef = this.snackBar.open(`Book ${book.title} has been added to reading list`, 'Undo');
 
-    this.subscription.add(snackBarRef.afterDismissed().subscribe((result)=>{
-      if (!result.dismissedByAction) {
-        this.store.dispatch(addToReadingList({ book }))
-      }
+    this.subscription.add(snackBarRef.onAction().subscribe(() =>{
+        this.store.dispatch(cancelAddToReadingList({ book }))
     }))
   }
 
