@@ -57,14 +57,14 @@ export class ReadingListEffects implements OnInitEffects {
   markAsRead$ = createEffect(() =>
   this.actions$.pipe(
     ofType(ReadingListActions.markBookAsRead),
-    concatMap(({ item }) =>
+    concatMap(({ book, finishedDate }) => 
       this.http.put
-      (`/api/reading-list/${item.bookId}/finished`, item).pipe(
+      (`/api/reading-list/${book.bookId}/finished`, { book, finishedDate }).pipe(
         map(() =>
-          ReadingListActions.confirmedMarkAsRead({ item })
+          ReadingListActions.confirmedMarkAsRead({ book })
         ),
         catchError(() =>
-          of(ReadingListActions.failedMarkAsRead({ item }))
+          of(ReadingListActions.failedMarkAsRead({ book }))
         )
       )
     )

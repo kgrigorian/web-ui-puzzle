@@ -17,10 +17,10 @@ export class ReadingListComponent {
 
   removeFromReadingList(item: ReadingListItem): void {
     this.store.dispatch(removeFromReadingList({ item }));
-    this.store.dispatch(unmarkBookAsRead({ item }));
+    this.store.dispatch(unmarkBookAsRead({ book: item }));
   }
 
   markAsRead(item: ReadingListItem): void {
-    this.store.dispatch(markBookAsRead({ item }));
+    this.store.dispatch(markBookAsRead({ book: item, finishedDate: new Date().toISOString() }));
   }
 }

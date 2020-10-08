@@ -41,20 +41,28 @@ const readingListReducer = createReducer(
       loaded: true
     });
   }),
-  on(ReadingListActions.markBookAsRead, (state, { item }) => {
+  on(ReadingListActions.markBookAsRead, (state, { book, finishedDate }) => {
     const update: Update<ReadingListItem> = {
-      id: item.bookId,
+      id: book.bookId,
       changes: {
         finished: true,
-        finishedDate: new Date().toISOString()
+        finishedDate: finishedDate
       }
     };
-
     return readingListAdapter.updateOne(update, state)
   }),
-  on(ReadingListActions.unmarkBookAsRead, (state, { item }) => {
+  on(ReadingListActions.failedMarkAsRead, (state, { book }) => {
     const update: Update<ReadingListItem> = {
-      id: item.bookId,
+      id: book.bookId,
+      changes: {
+        finished: null,
+      }
+    };
+    return readingListAdapter.updateOne(update, state)
+  }),
+  on(ReadingListActions.unmarkBookAsRead, (state, { book }) => {
+    const update: Update<ReadingListItem> = {
+      id: book.bookId,
       changes: {
         finished: null,
         finishedDate: null

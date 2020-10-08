@@ -29,12 +29,13 @@ export class ReadingListService {
     });
   }
 
-  async markAsRead(id: string): Promise<void> {
+  async markAsRead(item: ReadingListItem, isoDate: string): Promise<void> {
+
     this.storage.update(list => {
       return list.map(listItem => {
-        if (listItem.bookId === id) {
+        if (listItem.bookId === item.bookId) {
         const { bookId, finished, finishedDate,  ...rest} = listItem
-        return <ReadingListItem>{ bookId: id, finished: true, finishedDate: new Date().toISOString(), ...rest}
+        return <ReadingListItem>{ bookId: item.bookId, finished: true, finishedDate: isoDate, ...rest}
         }
         return listItem;
       });

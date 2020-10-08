@@ -19,22 +19,22 @@ export const addToReadingList = createAction(
 
 export const markBookAsRead = createAction(
   '[Reading List API] Mark as read',
-  props<{ item: ReadingListItem }>()
+  props<{ book: ReadingListItem , finishedDate: string}>()
 );
 
 export const confirmedMarkAsRead = createAction(
   '[Reading List API] Confirmed mark as read',
-  props<{ item: ReadingListItem }>()
+  props<{ book: ReadingListItem }>()
 );
 
 export const failedMarkAsRead = createAction(
   '[Reading List API] Failed mark as read',
-  props<{ item: ReadingListItem }>()
+  props<{ book: ReadingListItem }>()
 );
 
 export const unmarkBookAsRead = createAction(
   '[Reading List API] Unmark as read',
-  props<{ item: ReadingListItem }>()
+  props<{ book: ReadingListItem }>()
 );
 
 export const failedAddToReadingList = createAction(
