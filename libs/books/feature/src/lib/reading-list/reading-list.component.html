@@ -9,7 +9,18 @@
         {{ b.authors.join(',') }}
       </div>
     </div>
-    <div>
+    <div class="reading-list-item--buttons">
+      <ng-container *ngIf="b.finished; else unfinished">
+        <div role="img" attr.aria-label="{{ b.title }} was finished on {{ b.finishedDate | date }}">
+          <mat-icon class="icon" color="disabled" matTooltip="Finished {{ b.finishedDate | date }}">done_all</mat-icon>
+        </div>
+      </ng-container>
+      <ng-template #unfinished>
+        <button mat-icon-button color="primary" [attr.aria-label]="'Mark ' + b.title + ' as read'"
+          (click)="markAsRead(b)">
+          <mat-icon>done</mat-icon>
+        </button>
+      </ng-template>
       <button mat-icon-button color="warn" [attr.aria-label]="'Remove ' + b.title + ' from reading list'"
         (click)="removeFromReadingList(b)">
         <mat-icon>remove_circle</mat-icon>
